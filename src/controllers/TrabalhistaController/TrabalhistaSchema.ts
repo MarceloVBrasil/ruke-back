@@ -1,0 +1,66 @@
+import { object, string, mixed, array, InferType, boolean, number } from "yup"
+
+const updateSchema = object().shape({
+    id: string().uuid('uuid inválido').required('id é obrigatório'),
+    tenant_id: string().uuid('uuid inválido').required('id é obrigatório'),
+
+    nome_reclamante: string(),
+    nacionalidade_reclamante: string(),
+    data_nascimento_reclamante: string(),
+    cpf_reclamante: string(),
+    estado_civil_reclamante: string(),
+    profissao_reclamante: string(),
+    cep_reclamante: string(),
+    rua_reclamante: string(),
+    numero_reclamante: string(),
+    complemento_reclamante: string(),
+    bairro_reclamante: string(),
+    cidade_reclamante: string(),
+    estado_reclamante: string(),
+    doenca_reclamante: string(),
+
+    reclamadas_pj: mixed().nullable(),
+    reclamadas_pf: mixed().nullable(),
+
+    cidade_acao: string(),
+    estado_acao: string(),
+    local_selecionado: string(),
+    local_selecionado_correspondente: string(),
+
+    data_inicio_contrato: string(),
+    data_fim_contrato: string(),
+    contrato_ativo: boolean(),
+    remuneracao: number(),
+    cargo: string(),
+
+    blocos_pedidos_existentes: array().of(string()),
+
+    pedido_adicional_insalubridade: mixed().nullable(),
+    pedido_adicional_periculosidade: mixed().nullable(),
+    pedido_aviso_previo: mixed().nullable(),
+    pedido_danos_morais: mixed().nullable(),
+    pedido_diferencas_salariais: mixed().nullable(),
+    pedido_falta_deposito_fgts: mixed().nullable(),
+    pedido_ferias: mixed().nullable(),
+    pedido_garantia_provisoria_emprego: mixed().nullable(),
+    pedido_gorjetas: mixed().nullable(),
+    pedido_gratuidade_justica: mixed().nullable(),
+    pedido_jornada_trabalho: mixed().nullable(),
+    pedido_multa_477: mixed().nullable(),
+    pedido_rescisao_indireta: mixed().nullable(),
+    pedido_reversao_justa_causa: mixed().nullable(),
+    reconhecimento_vinculo_empregaticio: mixed().nullable(),
+    pedido_act_cct: mixed().nullable(),
+    pedido_acumulo_funcao: mixed().nullable(),
+    pedido_salario_substituicao: mixed().nullable(),
+    pedido_desvio_funcao: mixed().nullable(),
+    pedido_integracao_parcelas_pagas_dinheiro: mixed().nullable(),
+})
+
+export class TrabalhistaSchema {
+    static update() {
+        return updateSchema
+    }
+}
+
+export type IUpdateTrabalhistaSchema = InferType<typeof updateSchema>
