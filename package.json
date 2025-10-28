@@ -4,25 +4,32 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@types/pdf-parse": "^1.1.5",
+    "adm-zip": "^0.5.16",
     "axios": "^1.12.2",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.2",
+    "node-tesseract-ocr": "^2.2.1",
     "nodemailer": "^7.0.9",
+    "pdf-parse": "^2.4.5",
     "yup": "^1.7.1"
   },
   "scripts": {
     "dev": "tsx watch src/index.ts"
   },
   "devDependencies": {
+    "@types/adm-zip": "^0.5.7",
     "@types/axios": "^0.14.4",
     "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.19",
     "@types/dotenv": "^8.2.3",
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.10",
+    "@types/multer": "^2.0.0",
     "@types/nodemailer": "^7.0.2",
     "@types/yup": "^0.32.0",
     "tsx": "^4.20.6"

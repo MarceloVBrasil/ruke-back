@@ -15,6 +15,7 @@ import bpcRoutes from "./routes/bpcRoutes"
 import pessoaRoutes from "./routes/pessoasRoutes"
 import doencaRoutes from "./routes/doencasRoutes"
 import rmcRoutes from "./routes/rmcRoutes"
+import ocrRoutes from "./routes/ocrRoutes"
 
 const app = express()
 
@@ -38,5 +39,6 @@ app.use('/bpc', bpcRoutes)
 app.use('/pessoas', pessoaRoutes)
 app.use('/doencas', doencaRoutes)
 app.use('/rmc', rmcRoutes)
+app.use('/ocr', ocrRoutes)
 
 app.listen(PORT, () => console.log(`listening on port ${PORT}`))
