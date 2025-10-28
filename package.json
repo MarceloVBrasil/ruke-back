@@ -1,5 +1,6 @@
 {
   "name": "rmc-back",
+  "type": "module",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -16,10 +17,14 @@
     "node-tesseract-ocr": "^2.2.1",
     "nodemailer": "^7.0.9",
     "pdf-parse": "^2.4.5",
+    "typescript": "^5.9.3",
     "yup": "^1.7.1"
   },
   "scripts": {
-    "dev": "tsx watch src/index.ts"
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "tsx src/index.ts",
+    "clean": "rm -rf dist"
   },
   "devDependencies": {
     "@types/adm-zip": "^0.5.7",

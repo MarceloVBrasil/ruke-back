@@ -1,0 +1,8 @@
+import { Processo } from "../../models/Processo/Processo";
+export interface IProcessoRepository {
+    getProcessos(tenant_id: string): Promise<Processo[]>;
+    getMovimentacoes(): Promise<Processo[]>;
+    salvar(data: Processo): Promise<Processo>;
+    filtrar(data: Partial<Processo>): Promise<Processo[]>;
+}
+//# sourceMappingURL=IProcessoRepository.d.ts.map

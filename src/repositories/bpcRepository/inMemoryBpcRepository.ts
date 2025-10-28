@@ -19,7 +19,7 @@ export class InMemoryBpcRepository implements IBpcRepository {
 
     async update(id: string, data: Partial<Bpc>) {
         const bpc_index = this.bpc.findIndex(b => b.id === id)
-        this.bpc[bpc_index] = { ...this.bpc[bpc_index], ...data }
+        this.bpc[bpc_index] = { ...this.bpc[bpc_index], ...data } as Bpc
         return this.bpc[bpc_index]
     }
 
