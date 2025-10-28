@@ -1,5 +1,6 @@
 import express from "express"
 import cors from "cors"
+import dotenv from "dotenv"
 
 import authRoutes from "./routes/authRoutes"
 import userRoutes from "./routes/userRoutes"
@@ -17,13 +18,14 @@ import doencaRoutes from "./routes/doencasRoutes"
 import rmcRoutes from "./routes/rmcRoutes"
 import ocrRoutes from "./routes/ocrRoutes"
 
+dotenv.config()
+const { PORT } = process.env
+
 const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
-
-const PORT = 3000
 
 app.use('/auth', authRoutes)
 app.use('/tenants', tenantsRoutes)
