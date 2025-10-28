@@ -1,6 +1,6 @@
 import { Doenca } from "../../models/Doenca/Doenca";
 import { IDoencaRepository } from "../../repositories/doencaRepository/IDoencaRepository";
-import { IDoencaService } from "./iDoencaService";
+import { IDoencaService } from "./IDoencaService";
 
 export class DoencaService implements IDoencaService {
     constructor(private doencaRepository: IDoencaRepository) { }

@@ -1,4 +1,4 @@
-import { periodo } from "../step10/funcao"
+import { periodo } from "../step10/pedido_act_cct"
 
 export type pedido_gorjetas = {
     pagamento_por_fora: boolean | null

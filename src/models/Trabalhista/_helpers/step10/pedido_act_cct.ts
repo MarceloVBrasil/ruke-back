@@ -8,7 +8,7 @@ type funcao = {
     diferenca_prevista: diferenca_prevista | null
 }
 
-type periodo = 'todo_contrato' | 'periodo_delimitado'
+export type periodo = 'todo_contrato' | 'periodo_delimitado'
 type diferenca_prevista = 'convencao_coletiva' | 'acordo_coletivo'
 
 export type pedido_act_cct = {
