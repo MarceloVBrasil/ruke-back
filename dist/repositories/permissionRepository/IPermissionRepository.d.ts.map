@@ -1,1 +1,0 @@
-{"version":3,"file":"IPermissionRepository.d.ts","sourceRoot":"","sources":["../../../src/repositories/permissionRepository/IPermissionRepository.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,UAAU,EAAE,MAAM,oCAAoC,CAAC;AAEhE,MAAM,WAAW,qBAAqB;IAClC,gBAAgB,CAAC,aAAa,EAAE,MAAM,GAAG,OAAO,CAAC,UAAU,EAAE,CAAC,CAAA;CACjE"}
