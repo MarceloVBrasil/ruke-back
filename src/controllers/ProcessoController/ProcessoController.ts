@@ -11,7 +11,7 @@ export class ProcessoController {
             const data = await processoService.getProcessos(req.body.tenantId)
             res.status(200).json(data)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(500).json(err)
         }
     }
@@ -22,7 +22,7 @@ export class ProcessoController {
             const data = await processoService.getMovimentacoes()
             res.status(200).json(data)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(500).json(err)
         }
     }
@@ -34,7 +34,7 @@ export class ProcessoController {
             const response = await processoService.salvar(data as Processo)
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(500).json(err)
         }
     }
@@ -46,7 +46,7 @@ export class ProcessoController {
             const response = await processoService.filtrar(data as Processo)
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(500).json(err)
         }
     }

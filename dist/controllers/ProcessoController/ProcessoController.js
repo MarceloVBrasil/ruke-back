@@ -11,7 +11,7 @@ class ProcessoController {
             res.status(200).json(data);
         }
         catch (error) {
-            const err = { errror: true, message: error.message };
+            const err = { error: true, message: error.message };
             res.status(500).json(err);
         }
     }
@@ -22,7 +22,7 @@ class ProcessoController {
             res.status(200).json(data);
         }
         catch (error) {
-            const err = { errror: true, message: error.message };
+            const err = { error: true, message: error.message };
             res.status(500).json(err);
         }
     }
@@ -34,7 +34,7 @@ class ProcessoController {
             res.status(200).json(response);
         }
         catch (error) {
-            const err = { errror: true, message: error.message };
+            const err = { error: true, message: error.message };
             res.status(500).json(err);
         }
     }
@@ -46,7 +46,7 @@ class ProcessoController {
             res.status(200).json(response);
         }
         catch (error) {
-            const err = { errror: true, message: error.message };
+            const err = { error: true, message: error.message };
             res.status(500).json(err);
         }
     }

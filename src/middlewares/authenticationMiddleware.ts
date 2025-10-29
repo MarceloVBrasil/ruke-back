@@ -23,7 +23,7 @@ export async function authenticationMiddleware(req: Request, res: Response, next
         next()
 
     } catch (error: any) {
-        const err: server_error = { errror: true, message: error.message }
+        const err: server_error = { error: true, message: error.message }
         res.status(400).json(err)
     }
 }

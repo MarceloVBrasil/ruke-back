@@ -15,7 +15,7 @@ export class AuthController {
             res.status(200).json(response)
 
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(400).json(err)
         }
     }
@@ -30,7 +30,7 @@ export class AuthController {
             res.status(200).json(response)
 
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(400).json(err)
         }
     }
@@ -45,7 +45,7 @@ export class AuthController {
             res.status(200).json(response)
 
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(400).json(err)
         }
     }
@@ -57,7 +57,7 @@ export class AuthController {
             const response = await authService.refreshTokens(data)
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(400).json(err)
         }
     }
@@ -69,7 +69,7 @@ export class AuthController {
             const response = await authService.register(data)
             res.status(200).json({ message: 'usuário registrado com sucesso' })
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(400).json(err)
         }
     }
@@ -81,7 +81,7 @@ export class AuthController {
             const response = await authService.solicitarCodigoEsqueciMinhaSenha(data)
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(400).json(err)
         }
     }
@@ -93,7 +93,7 @@ export class AuthController {
             const response = await authService.trocarMinhaSenha(data)
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(400).json(err)
         }
     }

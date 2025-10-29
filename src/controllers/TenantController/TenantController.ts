@@ -13,7 +13,7 @@ export class TenantsController {
             const tenants = await tenantService.getAll()
             res.status(200).json(tenants)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(500).json(err)
         }
     }
@@ -23,7 +23,7 @@ export class TenantsController {
             const tenant = await tenantService.getById(req.params.id)
             res.status(200).json(tenant)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(500).json(err)
         }
     }
@@ -33,7 +33,7 @@ export class TenantsController {
             const data = await TenantSchema.add().validate(req.body, { stripUnknown: true })
             res.status(200).json({ message: "tenant adicionado com sucesso" })
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(400).json(err)
         }
     }
@@ -44,7 +44,7 @@ export class TenantsController {
             const response = await tenantService.update(data.id, data as Tenant)
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(400).json(err)
         }
     }
@@ -54,7 +54,7 @@ export class TenantsController {
             const response = await tenantService.delete(req.params.id)
             res.status(200).json({ message: "tenant deletado com sucesso" })
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(400).json(err)
         }
     }
@@ -64,7 +64,7 @@ export class TenantsController {
             tenantService.cancelarTodasAssinaturas()
             res.status(200).json({ message: "todas assinaturas foram canceladas com sucesso" })
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(400).json(err)
         }
     }

@@ -12,7 +12,7 @@ export class PlanoController {
             const response = await planoService.getAllByProdutoId(data.produto_id)
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(400).json(err)
         }
     }
@@ -23,7 +23,7 @@ export class PlanoController {
             const response = await planoService.getById(data.id)
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(400).json(err)
         }
     }
@@ -34,7 +34,7 @@ export class PlanoController {
             const response = await planoService.add(data)
             res.status(201).json({ message: 'plano adicionado com sucesso' })
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(400).json(err)
         }
     }
@@ -45,7 +45,7 @@ export class PlanoController {
             const response = await planoService.update(data.id, data)
             res.status(200).json({ message: 'plano atualizado com sucesso' })
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(400).json(err)
         }
     }
@@ -56,7 +56,7 @@ export class PlanoController {
             const response = await planoService.delete(data.id)
             res.status(200).json({ message: 'plano deletado com sucesso' })
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(400).json(err)
         }
     }

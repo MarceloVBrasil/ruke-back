@@ -12,7 +12,7 @@ export class UserController {
             const response = await userService.getAll(req.body.tenantId)
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(400).json(err)
         }
     }
@@ -23,7 +23,7 @@ export class UserController {
             const response = await userService.getById(req.params.id)
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(400).json(err)
         }
     }
@@ -35,7 +35,7 @@ export class UserController {
             const response = await userService.add(req.body.tenantId, data)
             res.status(201).json({ message: 'usuário adicionado com sucesso' })
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(400).json(err)
         }
     }
@@ -47,7 +47,7 @@ export class UserController {
             const response = await userService.update(data.id, data as User)
             res.status(200).json({ message: 'usuário atualizado com sucesso' })
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(400).json(err)
         }
     }
@@ -59,7 +59,7 @@ export class UserController {
             const response = await userService.delete(data.id)
             res.status(200).json({ message: 'usuário deletado com sucesso' })
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(400).json(err)
         }
     }

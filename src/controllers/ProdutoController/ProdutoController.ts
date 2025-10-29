@@ -10,7 +10,7 @@ export class ProdutoController {
             const response = await produtoService.getAll()
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(500).json(err)
         }
     }
@@ -22,7 +22,7 @@ export class ProdutoController {
             const response = await produtoService.add(data)
             res.status(201).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(400).json(err)
         }
     }
@@ -34,7 +34,7 @@ export class ProdutoController {
             const response = await produtoService.update(data.id, data)
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(400).json(err)
         }
     }
@@ -46,7 +46,7 @@ export class ProdutoController {
             const response = await produtoService.delete(data.id)
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(500).json(err)
         }
     }

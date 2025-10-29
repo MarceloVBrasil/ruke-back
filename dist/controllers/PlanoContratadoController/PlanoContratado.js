@@ -10,7 +10,7 @@ class PlanoContratadoController {
             res.status(200).json(response);
         }
         catch (error) {
-            const err = { errror: true, message: error.message };
+            const err = { error: true, message: error.message };
             res.status(400).json(err);
         }
     }

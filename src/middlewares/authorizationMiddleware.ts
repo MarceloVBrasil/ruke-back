@@ -12,7 +12,7 @@ export function authorizationMiddleware(dominio: string, permissoes: string[]) {
 
         const user = await userService.getByTenantId(tenantId)
         if (!user) {
-            const err: server_error = { errror: true, message: 'usuário não encontrado' }
+            const err: server_error = { error: true, message: 'usuário não encontrado' }
             return res.status(404).json(err)
         }
 
@@ -24,7 +24,7 @@ export function authorizationMiddleware(dominio: string, permissoes: string[]) {
         if (is_user_authorized) {
             next()
         } else {
-            const err: server_error = { errror: true, message: 'usuário não autorizado' }
+            const err: server_error = { error: true, message: 'usuário não autorizado' }
             res.status(401).json(err)
         }
     }

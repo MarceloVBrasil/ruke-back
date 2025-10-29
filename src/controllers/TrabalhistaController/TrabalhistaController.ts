@@ -12,7 +12,7 @@ export class TrabalhistaController {
             const response = await trabalhistaService.getAll(tenant_id)
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(500).json(err)
         }
     }
@@ -24,7 +24,7 @@ export class TrabalhistaController {
             const response = await trabalhistaService.getById(id)
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(500).json(err)
         }
     }
@@ -36,7 +36,7 @@ export class TrabalhistaController {
             const response = await trabalhistaService.calcularTotalCausa(id)
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(500).json(err)
         }
     }
@@ -48,7 +48,7 @@ export class TrabalhistaController {
             const response = await trabalhistaService.add(tenant_id)
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(500).json(err)
         }
     }
@@ -62,7 +62,7 @@ export class TrabalhistaController {
             const response = await trabalhistaService.update(id, data as unknown as Trabalhista)
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(500).json(err)
         }
     }
@@ -74,7 +74,7 @@ export class TrabalhistaController {
             const response = await trabalhistaService.delete(id)
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(500).json(err)
         }
     }

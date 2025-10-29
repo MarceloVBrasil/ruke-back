@@ -9,7 +9,7 @@ export class PessoaController {
             const response = await pessoaService.getAll(req.params.id_bpc)
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(500).json(err)
         }
     }
@@ -20,7 +20,7 @@ export class PessoaController {
             const response = await pessoaService.getById(req.params.id)
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(500).json(err)
         }
     }
@@ -32,7 +32,7 @@ export class PessoaController {
             const response = await pessoaService.add(req.body)
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(500).json(err)
         }
     }
@@ -43,7 +43,7 @@ export class PessoaController {
             const response = await pessoaService.update(req.params.id, req.body)
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(500).json(err)
         }
     }
@@ -54,7 +54,7 @@ export class PessoaController {
             const response = await pessoaService.delete(req.params.id)
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(500).json(err)
         }
     }

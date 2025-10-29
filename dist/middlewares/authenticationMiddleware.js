@@ -21,7 +21,7 @@ async function authenticationMiddleware(req, res, next) {
         next();
     }
     catch (error) {
-        const err = { errror: true, message: error.message };
+        const err = { error: true, message: error.message };
         res.status(400).json(err);
     }
 }

@@ -11,7 +11,7 @@ export class SuperendividamentoController {
             const response = await superendividamentoService.getAll(req.body.tenantId)
             return res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             return res.status(500).json(err)
         }
     }
@@ -22,7 +22,7 @@ export class SuperendividamentoController {
             const response = await superendividamentoService.getById(req.params.id)
             return res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             return res.status(500).json(err)
         }
     }
@@ -33,7 +33,7 @@ export class SuperendividamentoController {
             const response = await superendividamentoService.add(req.body.tenantId)
             return res.status(201).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             return res.status(500).json(err)
         }
     }
@@ -45,7 +45,7 @@ export class SuperendividamentoController {
             const response = await superendividamentoService.update(data.id, data as Superendividamento)
             return res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             return res.status(500).json(err)
         }
     }
@@ -56,7 +56,7 @@ export class SuperendividamentoController {
             const response = await superendividamentoService.delete(req.params.id)
             return res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             return res.status(500).json(err)
         }
     }

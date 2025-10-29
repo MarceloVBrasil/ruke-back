@@ -9,7 +9,7 @@ export class RmcController {
             const response = await rmcService.getAll(req.body.tenantId)
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(500).json(err)
         }
     }
@@ -20,7 +20,7 @@ export class RmcController {
             const response = await rmcService.getById(req.params.id)
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(500).json(err)
         }
     }
@@ -31,7 +31,7 @@ export class RmcController {
             const response = await rmcService.add(req.body.tenantId)
             res.status(201).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(500).json(err)
         }
     }
@@ -42,7 +42,7 @@ export class RmcController {
             const response = await rmcService.update(req.params.id, req.body)
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(500).json(err)
         }
     }
@@ -53,7 +53,7 @@ export class RmcController {
             const response = await rmcService.delete(req.params.id)
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(500).json(err)
         }
     }

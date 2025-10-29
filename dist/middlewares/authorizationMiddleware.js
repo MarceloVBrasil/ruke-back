@@ -10,7 +10,7 @@ function authorizationMiddleware(dominio, permissoes) {
         const permissionService = (0, PermissionFactory_1.PermissionFactory)();
         const user = await userService.getByTenantId(tenantId);
         if (!user) {
-            const err = { errror: true, message: 'usuário não encontrado' };
+            const err = { error: true, message: 'usuário não encontrado' };
             return res.status(404).json(err);
         }
         const userPermissions = await permissionService.getPermissionsByUserGroupId(user?.user_group_id);
@@ -20,7 +20,7 @@ function authorizationMiddleware(dominio, permissoes) {
             next();
         }
         else {
-            const err = { errror: true, message: 'usuário não autorizado' };
+            const err = { error: true, message: 'usuário não autorizado' };
             res.status(401).json(err);
         }
     };

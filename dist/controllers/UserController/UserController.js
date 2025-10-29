@@ -11,7 +11,7 @@ class UserController {
             res.status(200).json(response);
         }
         catch (error) {
-            const err = { errror: true, message: error.message };
+            const err = { error: true, message: error.message };
             res.status(400).json(err);
         }
     }
@@ -22,7 +22,7 @@ class UserController {
             res.status(200).json(response);
         }
         catch (error) {
-            const err = { errror: true, message: error.message };
+            const err = { error: true, message: error.message };
             res.status(400).json(err);
         }
     }
@@ -34,7 +34,7 @@ class UserController {
             res.status(201).json({ message: 'usuário adicionado com sucesso' });
         }
         catch (error) {
-            const err = { errror: true, message: error.message };
+            const err = { error: true, message: error.message };
             res.status(400).json(err);
         }
     }
@@ -46,7 +46,7 @@ class UserController {
             res.status(200).json({ message: 'usuário atualizado com sucesso' });
         }
         catch (error) {
-            const err = { errror: true, message: error.message };
+            const err = { error: true, message: error.message };
             res.status(400).json(err);
         }
     }
@@ -58,7 +58,7 @@ class UserController {
             res.status(200).json({ message: 'usuário deletado com sucesso' });
         }
         catch (error) {
-            const err = { errror: true, message: error.message };
+            const err = { error: true, message: error.message };
             res.status(400).json(err);
         }
     }

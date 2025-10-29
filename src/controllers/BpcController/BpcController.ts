@@ -9,7 +9,7 @@ export class BpcController {
             const response = await bpcService.getAll(req.body.tenantId)
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(500).json(err)
         }
     }
@@ -20,7 +20,7 @@ export class BpcController {
             const response = await bpcService.getById(req.params.id)
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(500).json(err)
         }
     }
@@ -31,7 +31,7 @@ export class BpcController {
             const response = await bpcService.add(req.body.tenantId)
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(500).json(err)
         }
     }
@@ -42,7 +42,7 @@ export class BpcController {
             const response = await bpcService.update(req.params.id, req.body)
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(500).json(err)
         }
     }
@@ -53,7 +53,7 @@ export class BpcController {
             const response = await bpcService.delete(req.params.id)
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(500).json(err)
         }
     }

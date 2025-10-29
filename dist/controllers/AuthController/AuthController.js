@@ -13,7 +13,7 @@ class AuthController {
             res.status(200).json(response);
         }
         catch (error) {
-            const err = { errror: true, message: error.message };
+            const err = { error: true, message: error.message };
             res.status(400).json(err);
         }
     }
@@ -26,7 +26,7 @@ class AuthController {
             res.status(200).json(response);
         }
         catch (error) {
-            const err = { errror: true, message: error.message };
+            const err = { error: true, message: error.message };
             res.status(400).json(err);
         }
     }
@@ -39,7 +39,7 @@ class AuthController {
             res.status(200).json(response);
         }
         catch (error) {
-            const err = { errror: true, message: error.message };
+            const err = { error: true, message: error.message };
             res.status(400).json(err);
         }
     }
@@ -51,7 +51,7 @@ class AuthController {
             res.status(200).json(response);
         }
         catch (error) {
-            const err = { errror: true, message: error.message };
+            const err = { error: true, message: error.message };
             res.status(400).json(err);
         }
     }
@@ -63,7 +63,7 @@ class AuthController {
             res.status(200).json({ message: 'usuário registrado com sucesso' });
         }
         catch (error) {
-            const err = { errror: true, message: error.message };
+            const err = { error: true, message: error.message };
             res.status(400).json(err);
         }
     }
@@ -75,7 +75,7 @@ class AuthController {
             res.status(200).json(response);
         }
         catch (error) {
-            const err = { errror: true, message: error.message };
+            const err = { error: true, message: error.message };
             res.status(400).json(err);
         }
     }
@@ -87,7 +87,7 @@ class AuthController {
             res.status(200).json(response);
         }
         catch (error) {
-            const err = { errror: true, message: error.message };
+            const err = { error: true, message: error.message };
             res.status(400).json(err);
         }
     }

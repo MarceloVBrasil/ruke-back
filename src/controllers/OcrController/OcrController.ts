@@ -17,7 +17,7 @@ export class OcrController {
 
             return res.status(200).json(response);
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message };
+            const err: server_error = { error: true, message: error.message };
             return res.status(500).json(err);
         }
     }
@@ -34,7 +34,7 @@ export class OcrController {
 
             return res.status(200).json(response);
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message };
+            const err: server_error = { error: true, message: error.message };
             return res.status(500).json(err);
         }
     }
@@ -51,7 +51,7 @@ export class OcrController {
 
             return res.status(200).json(response);
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message };
+            const err: server_error = { error: true, message: error.message };
             return res.status(500).json(err);
         }
     }
@@ -68,7 +68,7 @@ export class OcrController {
 
             return res.status(200).json(response);
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message };
+            const err: server_error = { error: true, message: error.message };
             return res.status(500).json(err);
         }
     }

@@ -9,7 +9,7 @@ export class PlanoContratadoController {
             const response = await planoContratadoService.getAll(req.body.tenantId)
             res.status(200).json(response)
         } catch (error: any) {
-            const err: server_error = { errror: true, message: error.message }
+            const err: server_error = { error: true, message: error.message }
             res.status(400).json(err)
         }
     }

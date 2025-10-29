@@ -12,7 +12,7 @@ class PlanoController {
             res.status(200).json(response);
         }
         catch (error) {
-            const err = { errror: true, message: error.message };
+            const err = { error: true, message: error.message };
             res.status(400).json(err);
         }
     }
@@ -23,7 +23,7 @@ class PlanoController {
             res.status(200).json(response);
         }
         catch (error) {
-            const err = { errror: true, message: error.message };
+            const err = { error: true, message: error.message };
             res.status(400).json(err);
         }
     }
@@ -34,7 +34,7 @@ class PlanoController {
             res.status(201).json({ message: 'plano adicionado com sucesso' });
         }
         catch (error) {
-            const err = { errror: true, message: error.message };
+            const err = { error: true, message: error.message };
             res.status(400).json(err);
         }
     }
@@ -45,7 +45,7 @@ class PlanoController {
             res.status(200).json({ message: 'plano atualizado com sucesso' });
         }
         catch (error) {
-            const err = { errror: true, message: error.message };
+            const err = { error: true, message: error.message };
             res.status(400).json(err);
         }
     }
@@ -56,7 +56,7 @@ class PlanoController {
             res.status(200).json({ message: 'plano deletado com sucesso' });
         }
         catch (error) {
-            const err = { errror: true, message: error.message };
+            const err = { error: true, message: error.message };
             res.status(400).json(err);
         }
     }
