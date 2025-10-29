@@ -8,6 +8,9 @@ class InMemoryLoginCodigoRepository {
     async getByEmail(email) {
         return this.login_codigo.find(l => l.email === email);
     }
+    async getByCodigo(codigo) {
+        return this.login_codigo.find(l => l.codigo === codigo);
+    }
     async add(data) {
         this.login_codigo.push(data);
         return data;

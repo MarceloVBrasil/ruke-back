@@ -16,6 +16,10 @@ const solicitarCodigoSchema = (0, yup_1.object)().shape({
 const refreshTokenSchema = (0, yup_1.object)().shape({
     token: (0, yup_1.string)().required("token é obrigatório"),
 });
+const trocarSenhaSchema = (0, yup_1.object)().shape({
+    senha: (0, yup_1.string)().required('senha é obrigatória'),
+    codigo: (0, yup_1.string)().required('código é obrigatória')
+});
 const registerSchema = (0, yup_1.object)().shape({
     id_plano: (0, yup_1.string)().required('id_plano é obrigatório'),
     nome: (0, yup_1.string)().required('nome é obrigatório'),
@@ -44,6 +48,9 @@ class AuthSchema {
     }
     static register() {
         return registerSchema;
+    }
+    static trocarSenha() {
+        return trocarSenhaSchema;
     }
 }
 exports.AuthSchema = AuthSchema;

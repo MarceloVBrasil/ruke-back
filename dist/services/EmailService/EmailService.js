@@ -12,5 +12,14 @@ class EmailService {
         };
         await EmailHelpers_1.transporter.sendMail(emailOptions);
     }
+    async sendCodigoParaMudarSenha(to, codigo) {
+        const emailOptions = {
+            to: to,
+            from: { name: "RUKE", address: "noreply@ruke.com.br" },
+            subject: "Código provisório para mudar senha",
+            html: `<p>seu código é ${codigo}</p>`
+        };
+        await EmailHelpers_1.transporter.sendMail(emailOptions);
+    }
 }
 exports.EmailService = EmailService;

@@ -15,15 +15,16 @@ const getTimeDiff_1 = require("../../utils/getTimeDiff");
 dotenv_1.default.config();
 const authHelper = new AuthHelper_1.AuthHelper();
 const { JWT_TOKEN_EXPIRES_IN, JWT_REFRESH_TOKEN_EXPIRES_IN } = process.env;
+const FIVE_MINUTES = 5 * 60_000;
 class AuthService {
-    constructor(userRepository, emailService, loginCodigo) {
-        this.userRepository = userRepository;
+    constructor(userService, emailService, loginCodigoService) {
+        this.userService = userService;
         this.emailService = emailService;
-        this.loginCodigo = loginCodigo;
+        this.loginCodigoService = loginCodigoService;
     }
     async login(data) {
         const tenantService = (0, TenantFactory_1.TenantFactory)();
-        const user = await this.userRepository.getByEmail(data.email);
+        const user = await this.userService.getByEmail(data.email);
         if (!user)
             throw new Error('Email e/ou senha inválido');
         if (!authHelper.verifyPassword(data.senha, user.senha))
@@ -54,19 +55,19 @@ class AuthService {
     }
     async loginComCodigo(data) {
         const tenantService = (0, TenantFactory_1.TenantFactory)();
-        const user = await this.userRepository.getByEmail(data.email);
+        const user = await this.userService.getByEmail(data.email);
         if (!user)
             throw new Error('Email e/ou código inválido');
-        const loginCodigo = await this.loginCodigo.getByEmail(data.email);
+        const loginCodigo = await this.loginCodigoService.getByEmail(data.email);
         if (!loginCodigo)
             throw new Error('Email e/ou código inválido');
         if (data.codigo !== loginCodigo.codigo)
             throw new Error('Email e/ou código inválido');
         const hora_agora = new Date();
-        if ((0, getTimeDiff_1.getTimeDiff)(hora_agora, loginCodigo.hora_envio) > 5 * 60_000) {
+        if ((0, getTimeDiff_1.getTimeDiff)(hora_agora, loginCodigo.hora_envio) > FIVE_MINUTES) {
             throw new Error('Email e/ou código inválido');
         }
-        await this.loginCodigo.delete(loginCodigo.id);
+        await this.loginCodigoService.delete(loginCodigo.id);
         const payload = { tenantId: user.tenantId };
         const token = authHelper.generateJWT(payload, JWT_TOKEN_EXPIRES_IN);
         const refreshToken = authHelper.generateJWT(payload, JWT_REFRESH_TOKEN_EXPIRES_IN);
@@ -91,17 +92,17 @@ class AuthService {
             cadastroPendente = true;
         return { token, refreshToken, regras: permissions, menusPermitidos, quantidade_usuarios_agenda, cadastroPendente, tenantId: tenant.id };
     }
-    async solicitarCodigo(data) {
-        const user = await this.userRepository.getByEmail(data.email);
+    async solicitarCodigoLogin(data) {
+        const user = await this.userService.getByEmail(data.email);
         if (!user)
             throw new Error('Email e/ou senha inválido');
         const codigo = (0, gerarNumero_1.gerarNumero6Digitos)();
         const novo_login_codigo = { id: crypto.randomUUID(), codigo, email: user.email, hora_envio: new Date() };
-        const existe_login_codigo_com_este_email = await this.loginCodigo.getByEmail(data.email);
+        const existe_login_codigo_com_este_email = await this.loginCodigoService.getByEmail(data.email);
         if (!!existe_login_codigo_com_este_email) {
-            await this.loginCodigo.delete(existe_login_codigo_com_este_email.id);
+            await this.loginCodigoService.delete(existe_login_codigo_com_este_email.id);
         }
-        await this.loginCodigo.add(novo_login_codigo);
+        await this.loginCodigoService.add(novo_login_codigo);
         await this.emailService.sendCodigoParaLogin(user.email, codigo);
         return codigo;
     }
@@ -113,7 +114,7 @@ class AuthService {
         const payload = { tenantId };
         const token = authHelper.generateJWT(payload, JWT_TOKEN_EXPIRES_IN);
         const refresh_token = authHelper.generateJWT(payload, JWT_REFRESH_TOKEN_EXPIRES_IN);
-        const user = await this.userRepository.getByTenantId(tenantId);
+        const user = await this.userService.getByTenantId(tenantId);
         const permissionService = (0, PermissionFactory_1.PermissionFactory)();
         const permissions = await permissionService.getPermissionsByUserGroupId(user?.user_group_id);
         const menusPermitidos = permissions.map(p => { return { nome: p.dominio }; });
@@ -121,7 +122,7 @@ class AuthService {
     }
     async register(data) {
         const { id_plano, cupom, tipo, partner, ...userData } = data;
-        const se_email_existe = await this.userRepository.getByEmail(data.email);
+        const se_email_existe = await this.userService.getByEmail(data.email);
         if (se_email_existe)
             throw new Error('e-mail já cadastrado');
         userData.senha = authHelper.hashPasssword(data.senha);
@@ -130,7 +131,34 @@ class AuthService {
         const planoContratadoService = (0, PlanoContratadoFactory_1.PlanoContratadoFactory)();
         await planoContratadoService.add(id_plano, tenant.id);
         const user = { id: crypto.randomUUID(), user_group_id: inMemoryUserGroupRepository_1.USER_GROUP_IDS.limited, tenantId: tenant.id, nivel: 'limited', ...userData };
-        return this.userRepository.add(user);
+        return this.userService.add(tenant.id, user);
+    }
+    async solicitarCodigoEsqueciMinhaSenha(data) {
+        const se_email_existe = await this.userService.getByEmail(data.email);
+        if (!se_email_existe)
+            throw new Error('e-mail não cadastrado');
+        const codigo = (0, gerarNumero_1.gerarNumero6Digitos)();
+        const novo_login_codigo = { id: crypto.randomUUID(), codigo, email: data.email, hora_envio: new Date() };
+        const existe_login_codigo_com_este_email = await this.loginCodigoService.getByEmail(data.email);
+        if (!!existe_login_codigo_com_este_email) {
+            await this.loginCodigoService.delete(existe_login_codigo_com_este_email.id);
+        }
+        await this.loginCodigoService.add(novo_login_codigo);
+        await this.emailService.sendCodigoParaMudarSenha(data.email, codigo);
+    }
+    async trocarMinhaSenha(data) {
+        const loginCodigo = await this.loginCodigoService.getByCodigo(data.codigo);
+        if (!loginCodigo)
+            throw new Error('Código inválido');
+        if (data.codigo !== loginCodigo.codigo)
+            throw new Error('Código inválido');
+        const hora_agora = new Date();
+        if ((0, getTimeDiff_1.getTimeDiff)(hora_agora, loginCodigo.hora_envio) > FIVE_MINUTES) {
+            throw new Error('Código inválido');
+        }
+        await this.loginCodigoService.delete(loginCodigo.id);
+        const user = await this.userService.getByEmail(loginCodigo.email);
+        await this.userService.update(user.id, { ...user, senha: authHelper.hashPasssword(data.senha) });
     }
 }
 exports.AuthService = AuthService;
