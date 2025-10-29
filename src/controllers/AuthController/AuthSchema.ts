@@ -18,6 +18,11 @@ const refreshTokenSchema = object().shape({
     token: string().required("token é obrigatório"),
 })
 
+const trocarSenhaSchema = object().shape({
+    senha: string().required('senha é obrigatória'),
+    codigo: string().required('código é obrigatória')
+})
+
 const registerSchema = object().shape({
     id_plano: string().required('id_plano é obrigatório'),
     nome: string().required('nome é obrigatório'),
@@ -52,6 +57,10 @@ export class AuthSchema {
     static register() {
         return registerSchema
     }
+
+    static trocarSenha() {
+        return trocarSenhaSchema
+    }
 }
 
 export type ILoginSchema = InferType<typeof loginSchema>
@@ -59,3 +68,4 @@ export type ILoginComCodigoSchema = InferType<typeof loginComCodigoSchema>
 export type ISolicitarCodigoSchema = InferType<typeof solicitarCodigoSchema>
 export type IRefreshToken = InferType<typeof refreshTokenSchema>
 export type IRegister = InferType<typeof registerSchema>
+export type ITrocarSenha = InferType<typeof trocarSenhaSchema>

@@ -12,4 +12,15 @@ export class EmailService {
 
         await transporter.sendMail(emailOptions)
     }
+
+    async sendCodigoParaMudarSenha(to: string, codigo: string) {
+        const emailOptions: IEmailOptions = {
+            to: to,
+            from: { name: "RUKE", address: "noreply@ruke.com.br" },
+            subject: "Código provisório para mudar senha",
+            html: `<p>seu código é ${codigo}</p>`
+        }
+
+        await transporter.sendMail(emailOptions)
+    }
 }

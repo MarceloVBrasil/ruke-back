@@ -8,6 +8,10 @@ export class InMemoryLoginCodigoRepository implements ILoginCodigoRepository {
         return this.login_codigo.find(l => l.email === email)
     }
 
+    async getByCodigo(codigo: string): Promise<LoginCodigo | undefined> {
+        return this.login_codigo.find(l => l.codigo === codigo)
+    }
+
     async add(data: LoginCodigo): Promise<LoginCodigo> {
         this.login_codigo.push(data)
         return data

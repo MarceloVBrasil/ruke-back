@@ -35,13 +35,13 @@ export class AuthController {
         }
     }
 
-    async solicitarCodigo(req: Request, res: Response) {
+    async solicitarCodigoLogin(req: Request, res: Response) {
         try {
             const authService = AuthFactory()
             await AuthSchema.solicitarCodigo().validate(req.body, { stripUnknown: true })
 
             const data = req.body as ISolicitarCodigoSchema
-            const response = await authService.solicitarCodigo(data)
+            const response = await authService.solicitarCodigoLogin(data)
             res.status(200).json(response)
 
         } catch (error: any) {
@@ -68,6 +68,30 @@ export class AuthController {
             const authService = AuthFactory()
             const response = await authService.register(data)
             res.status(200).json({ message: 'usuário registrado com sucesso' })
+        } catch (error: any) {
+            const err: server_error = { errror: true, message: error.message }
+            res.status(400).json(err)
+        }
+    }
+
+    async solicitarCodigoEsqueciMinhaSenha(req: Request, res: Response) {
+        try {
+            const authService = AuthFactory()
+            const data = await AuthSchema.solicitarCodigo().validate({ ...req.body }, { stripUnknown: true })
+            const response = await authService.solicitarCodigoEsqueciMinhaSenha(data)
+            res.status(200).json(response)
+        } catch (error: any) {
+            const err: server_error = { errror: true, message: error.message }
+            res.status(400).json(err)
+        }
+    }
+
+    async trocarMinhaSenha(req: Request, res: Response) {
+        try {
+            const authService = AuthFactory()
+            const data = await AuthSchema.trocarSenha().validate({ ...req.body }, { stripUnknown: true })
+            const response = await authService.trocarMinhaSenha(data)
+            res.status(200).json(response)
         } catch (error: any) {
             const err: server_error = { errror: true, message: error.message }
             res.status(400).json(err)

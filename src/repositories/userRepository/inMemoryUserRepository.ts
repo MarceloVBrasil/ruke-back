@@ -11,7 +11,7 @@ export class InMemoryUserRepository implements IUserRepository {
         {
             id: '2184b163-8f3c-484e-ba61-c25e2b21a28c',
             user_group_id: USER_GROUP_IDS.admin,
-            email: 'rukeruke@gmail.com',
+            email: 'marcelo.vital.brasil@gmail.com',
             senha: authHelper.hashPasssword('123'),
             tenantId: 'faefe160-0c9b-4634-95ab-007c9286bbba',
             nome: "Marcelo Brasil",

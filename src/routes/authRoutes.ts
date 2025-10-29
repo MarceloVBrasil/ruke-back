@@ -17,6 +17,13 @@ authRoutes.route('/login-com-codigo')
     .post(authController.loginComCodigo)
 
 authRoutes.route('/solicitar-codigo')
-    .post(authController.solicitarCodigo)
+    .post(authController.solicitarCodigoLogin)
+
+authRoutes.route('/esqueci-minha-senha')
+    .post(authController.solicitarCodigoEsqueciMinhaSenha)
+
+authRoutes.route('/trocar-minha-senha')
+    .post(authController.trocarMinhaSenha)
+
 
 export default authRoutes

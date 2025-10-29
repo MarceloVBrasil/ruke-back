@@ -1,6 +1,6 @@
 import dotenv from "dotenv"
 import { AuthHelper } from "./AuthHelper"
-import { ILoginComCodigoSchema, ILoginSchema, IRefreshToken, IRegister, ISolicitarCodigoSchema } from "../../controllers/AuthController/AuthSchema"
+import { ILoginComCodigoSchema, ILoginSchema, IRefreshToken, IRegister, ISolicitarCodigoSchema, ITrocarSenha } from "../../controllers/AuthController/AuthSchema"
 import { PermissionFactory } from "../PermissionService/PermissionFactory"
 import { User } from "../../models/User/User"
 import { TenantFactory } from "../TenantService/TenantFactory"
@@ -8,28 +8,30 @@ import { PlanoContratadoFactory } from "../PlanoContratadoService/PlanoContratad
 import { USER_GROUP_IDS } from "../../repositories/userGroupRepository/inMemoryUserGroupRepository"
 import { IAuthService } from "./IAuthService"
 import { EmailService } from "../EmailService/EmailService"
-import { UserService } from "../UserService/UserService"
 import { gerarNumero6Digitos } from "../../utils/gerarNumero"
 import { ILoginCodigoRepository } from "../../repositories/loginCodigoRepository/ILoginCodigoRepository"
 import { LoginCodigo } from "../../models/LoginCodigo/LoginCodigo"
 import { getTimeDiff } from "../../utils/getTimeDiff"
-import { IUserRepository } from "../../repositories/userRepository/IUserRepository"
+import { IUserService } from "@services/UserService/IUserService"
+import { UserService } from "@services/UserService/UserService"
+import { LoginCodigoService } from "@services/LoginCodigoService/LoginCodigoService"
 
 dotenv.config()
 
 const authHelper = new AuthHelper()
 const { JWT_TOKEN_EXPIRES_IN, JWT_REFRESH_TOKEN_EXPIRES_IN } = process.env
+const FIVE_MINUTES = 5 * 60_000
 
 export class AuthService implements IAuthService {
     constructor(
-        private userRepository: IUserRepository,
+        private userService: UserService,
         private emailService: EmailService,
-        private loginCodigo: ILoginCodigoRepository
+        private loginCodigoService: LoginCodigoService
     ) { }
 
     async login(data: ILoginSchema) {
         const tenantService = TenantFactory()
-        const user = await this.userRepository.getByEmail(data.email)
+        const user = await this.userService.getByEmail(data.email)
 
         if (!user) throw new Error('Email e/ou senha inválido')
         if (!authHelper.verifyPassword(data.senha, user.senha)) throw new Error('Email e/ou senha inválido')
@@ -67,20 +69,20 @@ export class AuthService implements IAuthService {
 
     async loginComCodigo(data: ILoginComCodigoSchema) {
         const tenantService = TenantFactory()
-        const user = await this.userRepository.getByEmail(data.email)
+        const user = await this.userService.getByEmail(data.email)
 
         if (!user) throw new Error('Email e/ou código inválido')
 
-        const loginCodigo = await this.loginCodigo.getByEmail(data.email)
+        const loginCodigo = await this.loginCodigoService.getByEmail(data.email)
         if (!loginCodigo) throw new Error('Email e/ou código inválido')
         if (data.codigo !== loginCodigo.codigo) throw new Error('Email e/ou código inválido')
 
         const hora_agora = new Date()
-        if (getTimeDiff(hora_agora, loginCodigo.hora_envio) > 5 * 60_000) {
+        if (getTimeDiff(hora_agora, loginCodigo.hora_envio) > FIVE_MINUTES) {
             throw new Error('Email e/ou código inválido')
         }
 
-        await this.loginCodigo.delete(loginCodigo.id)
+        await this.loginCodigoService.delete(loginCodigo.id)
 
         const payload = { tenantId: user.tenantId as string }
 
@@ -113,19 +115,19 @@ export class AuthService implements IAuthService {
         return { token, refreshToken, regras: permissions, menusPermitidos, quantidade_usuarios_agenda, cadastroPendente, tenantId: tenant.id }
     }
 
-    async solicitarCodigo(data: ISolicitarCodigoSchema): Promise<string> {
-        const user = await this.userRepository.getByEmail(data.email)
+    async solicitarCodigoLogin(data: ISolicitarCodigoSchema): Promise<string> {
+        const user = await this.userService.getByEmail(data.email)
         if (!user) throw new Error('Email e/ou senha inválido')
 
         const codigo = gerarNumero6Digitos()
         const novo_login_codigo: LoginCodigo = { id: crypto.randomUUID(), codigo, email: user.email, hora_envio: new Date() }
 
-        const existe_login_codigo_com_este_email = await this.loginCodigo.getByEmail(data.email)
+        const existe_login_codigo_com_este_email = await this.loginCodigoService.getByEmail(data.email)
         if (!!existe_login_codigo_com_este_email) {
-            await this.loginCodigo.delete(existe_login_codigo_com_este_email.id)
+            await this.loginCodigoService.delete(existe_login_codigo_com_este_email.id)
         }
 
-        await this.loginCodigo.add(novo_login_codigo)
+        await this.loginCodigoService.add(novo_login_codigo)
 
         await this.emailService.sendCodigoParaLogin(user.email, codigo)
 
@@ -142,7 +144,7 @@ export class AuthService implements IAuthService {
         const token = authHelper.generateJWT(payload, JWT_TOKEN_EXPIRES_IN)
         const refresh_token = authHelper.generateJWT(payload, JWT_REFRESH_TOKEN_EXPIRES_IN)
 
-        const user = await this.userRepository.getByTenantId(tenantId)
+        const user = await this.userService.getByTenantId(tenantId)
 
         const permissionService = PermissionFactory()
         const permissions = await permissionService.getPermissionsByUserGroupId(user?.user_group_id as string)
@@ -155,7 +157,7 @@ export class AuthService implements IAuthService {
     async register(data: IRegister) {
         const { id_plano, cupom, tipo, partner, ...userData } = data
 
-        const se_email_existe = await this.userRepository.getByEmail(data.email)
+        const se_email_existe = await this.userService.getByEmail(data.email)
         if (se_email_existe) throw new Error('e-mail já cadastrado')
 
         userData.senha = authHelper.hashPasssword(data.senha)
@@ -167,6 +169,39 @@ export class AuthService implements IAuthService {
         await planoContratadoService.add(id_plano, tenant.id)
 
         const user: User = { id: crypto.randomUUID(), user_group_id: USER_GROUP_IDS.limited, tenantId: tenant.id, nivel: 'limited', ...userData }
-        return this.userRepository.add(user)
+        return this.userService.add(tenant.id, user)
+    }
+
+    async solicitarCodigoEsqueciMinhaSenha(data: ISolicitarCodigoSchema): Promise<void> {
+        const se_email_existe = await this.userService.getByEmail(data.email)
+        if (!se_email_existe) throw new Error('e-mail não cadastrado')
+
+        const codigo = gerarNumero6Digitos()
+        const novo_login_codigo: LoginCodigo = { id: crypto.randomUUID(), codigo, email: data.email, hora_envio: new Date() }
+
+        const existe_login_codigo_com_este_email = await this.loginCodigoService.getByEmail(data.email)
+        if (!!existe_login_codigo_com_este_email) {
+            await this.loginCodigoService.delete(existe_login_codigo_com_este_email.id)
+        }
+
+        await this.loginCodigoService.add(novo_login_codigo)
+
+        await this.emailService.sendCodigoParaMudarSenha(data.email, codigo)
+    }
+
+    async trocarMinhaSenha(data: ITrocarSenha): Promise<void> {
+        const loginCodigo = await this.loginCodigoService.getByCodigo(data.codigo)
+        if (!loginCodigo) throw new Error('Código inválido')
+        if (data.codigo !== loginCodigo.codigo) throw new Error('Código inválido')
+
+        const hora_agora = new Date()
+        if (getTimeDiff(hora_agora, loginCodigo.hora_envio) > FIVE_MINUTES) {
+            throw new Error('Código inválido')
+        }
+
+        await this.loginCodigoService.delete(loginCodigo.id)
+
+        const user = await this.userService.getByEmail(loginCodigo.email) as User
+        await this.userService.update(user.id, { ...user, senha: authHelper.hashPasssword(data.senha) })
     }
 }
